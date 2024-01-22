@@ -14,6 +14,15 @@ def delete_item(item_id: str):
     db = get_database()
     db['items'].delete_one({'_id': item_id})
 
+def get_all_items():
+    db = get_database()
+    return db['items'].find({})
+
+def search_items(query: str):
+    db = get_database()
+    items = db['items'].find({"name": {"$regex": query}})
+    return list(items)
+
 def get_item_by_id(item_id: str):
     db = get_database()
     return db['items'].find_one({'_id': item_id})
