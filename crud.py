@@ -13,3 +13,17 @@ def update_item(item_id: str, item: Item):
 def delete_item(item_id: str):
     db = get_database()
     db['items'].delete_one({'_id': item_id})
+
+def get_item_by_id(item_id: str):
+    db = get_database()
+    return db['items'].find_one({'_id': item_id})
+
+#movies
+def search_movies(title: str):
+    db = get_database()
+    movies = db['movies'].find({"title":{"$regex": title, "$options": "i"}})
+    return list(movies)
+
+
+if __name__ == '__main__':
+    print(search_movies('Inception'))
