@@ -31,6 +31,11 @@ async def search_movies_endpoint(title: str):
         raise HTTPException(status_code=404, detail="Movie not found")
     return movies
 
+# Health check endpoint
+@app.get("/health-check/")
+def health_check_endpoint():
+    return {"status": "healthy"}
+
 
 # Run the server
 # uvicorn webserver:app --reload
