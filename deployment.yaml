@@ -12,6 +12,28 @@ spec:
       labels:
         app: my-web-deployment
     spec:
+      containers:
+      - name: my-web-deployment
+        image: <name>.azurecr.io/my-web-deployment:v1
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            memory: "512mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            port: 8000
+            path: /health
+          initialDelaySeconds: 3
+          periodSeconds: 3
+
 ---
 apiVersion: v1
 kind: Service
